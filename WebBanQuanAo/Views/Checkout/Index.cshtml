@@ -1,0 +1,232 @@
+﻿@model WebBanQuanAo.ModelViews.MuaHangVM
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<WebBanQuanAo.ModelViews.CartItem> Carts = ViewBag.GioHang;
+}
+
+
+
+
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
+
+    <title>Checkout example for Bootstrap</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/checkout/">
+
+
+    <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
+
+    }
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js" integrity="sha512-oL84kLQMEPIS350nZEpvFH1whU0HHGNUDq/X3WBdDAvKP7jn06gHTsCsymsoPYKF/duN8ZxzzvQgOaaZSgcYtQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    @* <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script> *@
+
+    <script src="~/Content/assets/styles/bootstrap4/popper.js"></script>
+    <script src="~/Content/assets/styles/bootstrap4/bootstrap.min.js"></script>
+    <script src="~/Content/assets/plugins/Isotope/isotope.pkgd.min.js"></script>
+    <script src="~/Content/assets/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+    <script src="~/Content/assets/plugins/easing/easing.js"></script>
+    <script src="~/Content/assets/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+    <script src="~/Content/assets/js/custom.js"></script>
+
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <link href="form-validation.css" rel="stylesheet">
+    <script>
+        function gett (form) {
+            $.ajax({
+                type: "POST",
+                data: formData,
+                url: "checkout.html",
+                processData: false,
+                contentType: false,
+                cache: false,
+                dataType: 'json',
+                success: function (response) {
+                    // console.log(toString(response);
+                    // alert(toString(response));
+                    location.href = (response.url);
+                },
+                error: function (response) {
+                    alert(response.) // I'm always get this.
+                }
+
+            });
+        };
+
+    </script>
+    <script type="text/javascript">
+        $(document).on("submit", "#newsLetterForm", function (event) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            var formData = new FormData(this);
+           // showw(formData.get("TypePayment"));
+            //var type = formData.get("TypePayment");
+            if (showw(formData.get("TypePayment"))==2) {
+                fetch("checkout.html",
+                    {
+                        method: "POST",
+                        body: formData,
+                    })
+                    .then(response => response.json())
+                    .then(data => { location.href = (data.url); 
+                    console.log(data.url)})
+                    .catch(error => console.log(error.message))
+                    .finally(() => console.log("Done"));
+            } else {
+                document.getElementById("newsLetterForm").submit();
+                    
+            } 
+        });
+    </script>
+    
+    <script>
+        function showw(e) {
+           return e;
+        };
+    </script>
+</head>
+
+<body class="bg-light">
+   
+     {
+    <div class="container">
+       
+                
+            
+        <div class="py-5 text-center">
+            <img class="d-block mx-auto mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+            <h2>THANH TOÁN ĐƠN HÀNG</h2>
+        </div>
+        <div class="card">
+            <div class="row">
+                <div class="row justify-content-center">
+                    <div class="col-md-5 order-md-2 mb-4">
+                        <br />
+                        <h4>Chi tiết đơn hàng</h4>
+                        <span class="badge badge-secondary badge-pill">3</span>
+
+                        <ul class="list-group mb-3">
+                            @if (Carts.Count() > 0)
+                            {
+                                foreach (var item in Carts)
+                                {
+                                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                        <div>
+                                            <h6 class="my-0">@item.ProductName  × @item.SoLuong</h6>
+
+                                        </div>
+                                        <span class="text-muted">@item.ThanhTien.ToString("#,##0") VNĐ</span>
+                                    </li>
+                                }
+                            }
+
+
+                           
+                            <li class="list-group-item d-flex justify-content-between">
+                                <h5>TỔNG ĐƠN HÀNG</h5>
+                                <div class="text-success">
+                                    <strong>@Carts.Sum(x => x.ThanhTien).ToString("#,##0") VNĐ</strong>
+                                </div>
+                            </li>
+                        </ul>
+
+                      
+                    </div>
+                    <div class="col-md-6 order-md-1">
+                        <br />
+                        <h4 class="mb-3">Thông tin đơn hàng</h4>
+                        <form  method="post" id="newsLetterForm" asp-action="Index" asp-controller="Checkout">
+                            <div class="mb-3">
+                                <label for="email">Họ và tên<span class="text-muted"></span></label>
+                                <input class="form-control" asp-for="FullName" placeholder="Họ và Tên" type="text">
+                                <span asp-validation-for="FullName" class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="address">Số điện thoại</label>
+                                <input class="form-control" asp-for="Phone" placeholder="Số điện thoại" type="number">
+                                <span asp-validation-for="Phone" class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="address2">Địa chỉ nhận hàng<span class="text-muted"></span></label>
+                                <input class="form-control" asp-for="Address" placeholder="Địa chỉ nhận hàng" type="text">
+                                <span asp-validation-for="Address" class="text-danger"></span>
+                            </div>
+
+
+
+                            <hr class="mb-4">
+
+                            <h4 class="mb-3">Phương thức thanh toán</h4>
+
+                            <div class="d-block my-3">
+                                <div class="custom-control custom-radio">
+                                    <input id="debit" asp-for="TypePayment" value="1" type="radio" class="custom-control-input" checked>
+                                    <label class="custom-control-label" for="debit">Thanh toán khi nhận hàng</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input id="credit" asp-for="TypePayment" value="2" type="radio" class="custom-control-input">
+                                    <label class="custom-control-label" for="credit">Thẻ tính dụng</label>
+                                </div>
+                            </div>
+       
+
+                            <hr class="mb-4">
+                            <input class="btn btn-success m-r-5" value="XÁC NHẬN ĐẶT HÀNG" type="submit">
+                            @*<a href="https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=1806000&vnp_Command=pay&vnp_CreateDate=20210801153333&vnp_CurrCode=VND&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=Thanh+toan+don+hang+%3A5&vnp_OrderType=other&vnp_ReturnUrl=https%3A%2F%2Fdomainmerchant.vn%2FReturnUrl&vnp_TmnCode=DEMOV210&vnp_TxnRef=5&vnp_Version=2.1.0&vnp_SecureHash=3e0d61a0c0534b2e36680b3f7277743e8784cc4e1d68fa7d276e79c23be7d6318d338b477910a27992f5057bb1582bd44bd82ae8009ffaf6d141219218625c42">VNPAL</a>*@
+                        </form>
+                        <br />
+                        
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <br />
+  
+    @* <script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function () {
+            'use strict';
+
+            window.addEventListener('load', function () {
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.getElementsByClassName('needs-validation');
+
+                // Loop over them and prevent submission
+                var validation = Array.prototype.filter.call(forms, function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+    </script> *@
+    
+    <script type="text/javascript">
+
+       
+        
+    </script>
+   
+</body>
+</html>
+
