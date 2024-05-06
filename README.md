@@ -1,6 +1,11 @@
 # ONLINE CLOTHING SHOP
 ## Introduction
-
+Online clothing shop with features
+- Login, logout, register, change password.
+- Search product, add to cart.
+- Order, payment with VNPay.
+- Manage product, account, order.
+- Statistical data.
 ## Languages and technologies used
 1. C# (.Net MVC)
 2. SQL
@@ -56,6 +61,6 @@
     ![](./demo/Picture24.png)
 23. Add news
     ![](./demo/Picture25.png)
-24. S
+24. Statistical data
     ![](./demo/Picture26.png)
 
